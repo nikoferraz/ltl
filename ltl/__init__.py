@@ -20,7 +20,7 @@ def remove_loaded(loaded, shipments):
     return shipments
 
 def distribute_shipments(trucks, shipments):
-    if trucks == []:
+    if trucks == [] or shipments == []:
         return [[]]
     shipments_cp = copy.copy(shipments)
     if len(trucks) == 1:
@@ -28,11 +28,8 @@ def distribute_shipments(trucks, shipments):
     optimal_shipment = []
     trucks_cp = copy.copy(trucks)
     truck_arrangements = list(itertools.permutations(trucks, len(trucks))) # Get all possible arrangements of the trucks.
-    truck_arrangements = [list(x) for x in truck_arrangements] # Convert to lists.
     current_shipment = []
-    index = 0
-    maximum = 0
-    capacity_filled = 0
+    index, maximum, capacity_filled = 0, 0, 0
     for arrangement in truck_arrangements:
         current_shipment.append([])
         capacity_filled = 0
@@ -52,5 +49,4 @@ def distribute_shipments(trucks, shipments):
         for truck in optimal_shipment:    
             if truck[0] == trucks[i]:
                 result.append(truck[1])
-    filled = [sum(capacity) for capacity in result]
     return result
